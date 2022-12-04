@@ -14,9 +14,10 @@ public class Enemy : MonoBehaviour
     [SerializeField] float _attackDistance = 2;
     [SerializeField] float _attackDelay = 3;
     [SerializeField] int _attackDamage = 1;
-    [SerializeField] float _launchPower = 3.5f;
+    private bool _dead;
 
-    private void Awake() {
+    private void Awake()
+    {
         _animator = GetComponentInChildren<Animator>();
         _navMeshAgent = GetComponent<NavMeshAgent>();
 
@@ -30,7 +31,7 @@ public class Enemy : MonoBehaviour
 
     private void Update()
     {
-        _animator.SetBool("Walk",_navMeshAgent.velocity.magnitude > 0);
+        _animator.SetBool("Walk", _navMeshAgent.velocity.magnitude > 0);
 
         if (ReadyToAttack())
             Attack();
@@ -39,10 +40,10 @@ public class Enemy : MonoBehaviour
     private bool ReadyToAttack()
     {
         float distanceToTarget = Vector3.Distance(transform.position, _flag.transform.position);
-       
+
         if (distanceToTarget > _attackDistance)
             return false;
-        
+
         if (Time.time < _nextAttackTime)
             return false;
 
@@ -58,18 +59,22 @@ public class Enemy : MonoBehaviour
 
     [ContextMenu("Die")]
 
-    public void Die()
+    public void Die(Vector3 launchVelosity)
     {
+
+        if (_dead) return;
+
+        _dead = true;
+
         _navMeshAgent.enabled = false;
         _animator.enabled = false;
-
-        var launchVelosity = -transform.forward + transform.up;
-        launchVelosity *= _launchPower;
+        GetComponent<Collider>().enabled = false;
 
         var rigidbodies = GetComponentsInChildren<Rigidbody>();
-        foreach(var rb in rigidbodies)
+        foreach (var rb in rigidbodies)
         {
             rb.velocity = launchVelosity;
         }
+        Destroy(gameObject, 5f);
     }
 }

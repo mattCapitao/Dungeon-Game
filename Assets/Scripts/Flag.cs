@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 
 public class Flag : MonoBehaviour
 {
-    [SerializeField] int _maxHealth = 10;
+    [SerializeField] int _maxHealth = 100;
     int _health;
 
     private void OnEnable()
@@ -14,11 +14,9 @@ public class Flag : MonoBehaviour
         _health = _maxHealth;
     }
 
-    public void TakeDamage (int dmg)
+    public void TakeDamage(int dmg)
     {
         _health -= dmg;
-        Debug.Log("flag health " + _health);
-
         if (_health <= 0)
             Die();
     }
@@ -27,5 +25,4 @@ public class Flag : MonoBehaviour
     {
         SceneManager.LoadScene(0);
     }
-
 }

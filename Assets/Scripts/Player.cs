@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -11,8 +12,9 @@ public class Player : MonoBehaviour
     Enemy _target;
     float _nextAttackTime;
 
-    [SerializeField] float _attackDistance = 1.5f;
+    [SerializeField] float _attackDistance = .5f;
     [SerializeField] float _attackDelay = 2f;
+    [SerializeField] float _launchPower = 3.5f;
 
     void Awake()
     {
@@ -34,12 +36,14 @@ public class Player : MonoBehaviour
         }
 
         if (ReadyToAttack())
-            Attack();
-           
+            AttackTarget();
+
     }
 
     private bool ReadyToAttack()
     {
+        if (_target == null) return false;
+
         float distanceToTarget = Vector3.Distance(transform.position, _target.transform.position);
 
         if (distanceToTarget > _attackDistance)
@@ -51,10 +55,22 @@ public class Player : MonoBehaviour
         return true;
     }
 
-    private void Attack()
+    private void AttackTarget()
     {
+        transform.LookAt(_target.transform.position);
         _nextAttackTime = Time.time + _attackDelay;
-        _target.Die();
+        _animator.SetTrigger("Attack");
+        var launchVelosity = transform.forward + transform.up;
+        launchVelosity *= _launchPower;
+
+        StartCoroutine(KillEnemy(_target, launchVelosity));
+        _target = null;
+    }
+
+    IEnumerator KillEnemy(Enemy target, Vector3 launchVelosity)
+    {
+        yield return new WaitForSeconds(.5f);
+        target.Die(launchVelosity);
     }
 
     private void MoveToTarget()
