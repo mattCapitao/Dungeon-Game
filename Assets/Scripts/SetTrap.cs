@@ -18,7 +18,7 @@ public class SetTrap : MonoBehaviour
             if(Physics.Raycast(ray, out var hitInfo, Mathf.Infinity, LayerMask.GetMask("Ground")))
             {
                 float distance = Vector3.Distance(transform.position, hitInfo.collider.transform.position);
-                Debug.Log("Distance to target " + distance);
+               
                 if (hitInfo.collider.GetComponentInChildren<Trap>() != null || distance > _maxTrapRange)
                     return;
                 SpawnTrap(hitInfo);

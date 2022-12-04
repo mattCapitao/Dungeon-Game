@@ -25,9 +25,15 @@ public class Player : MonoBehaviour
     void Update()
     {
         _animator.SetBool("Walk", _navMeshAgent.velocity.magnitude > 0);
+        
 
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButton(0))
         {
+            if (Input.GetMouseButtonDown(0) && _target == null)
+            {
+                FaceDestination(_navMeshAgent.destination);
+            }
+
             HandleClick();
         }
         else if (_target != null)
@@ -57,7 +63,7 @@ public class Player : MonoBehaviour
 
     private void AttackTarget()
     {
-        transform.LookAt(_target.transform.position);
+        
         _nextAttackTime = Time.time + _attackDelay;
         _animator.SetTrigger("Attack");
         var launchVelosity = transform.forward + transform.up;
@@ -76,6 +82,14 @@ public class Player : MonoBehaviour
     private void MoveToTarget()
     {
         _navMeshAgent.SetDestination(_target.transform.position);
+
+        FaceDestination(_target.transform.position);
+    }
+
+    private void FaceDestination(Vector3 loc)
+    {
+        var targetRotation = Quaternion.LookRotation(loc - transform.position);
+        transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, 4 * Time.deltaTime);
     }
 
     void HandleClick()
