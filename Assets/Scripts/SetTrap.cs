@@ -31,6 +31,7 @@ public class SetTrap : MonoBehaviour
         _trapsPlaced++;
         var placementPoint = hitInfo.collider.transform.position + new Vector3(0, .5f, 0);
         Trap trap = Instantiate(_trapPrefab, placementPoint, Quaternion.identity);
+        trap.ownedByPlayer = true;
         trap.transform.SetParent(hitInfo.collider.transform);
         StartCoroutine(TrapTimeOut(trap));
     }

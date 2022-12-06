@@ -7,8 +7,10 @@ public class Trap : MonoBehaviour
     private float _nextToggleTime;
     bool _trapActive;
 
-    [SerializeField] List<Enemy> _enemies;
+    [SerializeField] List<Npc> _enemies;
     [SerializeField] float _toggleRate = 2f;
+
+    public bool ownedByPlayer;
     
 
     private void Update()
@@ -36,14 +38,14 @@ public class Trap : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
-        var enemy = other.GetComponent<Enemy>();
+        var enemy = other.GetComponent<Npc>();
         if (enemy != null)
             _enemies.Add(enemy);
     }
 
     private void OnTriggerExit(Collider other)
     {
-        var enemy = other.GetComponent<Enemy>();
+        var enemy = other.GetComponent<Npc>();
         if (enemy != null)
             _enemies.Remove(enemy);
     }

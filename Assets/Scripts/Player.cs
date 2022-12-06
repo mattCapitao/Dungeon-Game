@@ -9,7 +9,7 @@ public class Player : MonoBehaviour
     Camera _camMain;
     NavMeshAgent _navMeshAgent;
     Animator _animator;
-    Enemy _target;
+    Npc _target;
     float _nextAttackTime;
 
     [SerializeField] float _attackDistance = .5f;
@@ -73,7 +73,7 @@ public class Player : MonoBehaviour
         _target = null;
     }
 
-    IEnumerator KillEnemy(Enemy target, Vector3 launchVelosity)
+    IEnumerator KillEnemy(Npc target, Vector3 launchVelosity)
     {
         yield return new WaitForSeconds(.5f);
         target.Die(launchVelosity);
@@ -107,8 +107,8 @@ public class Player : MonoBehaviour
     {
         for (int i = 0; i < hits; i++)
         {
-            var enemy = _results[i].collider.GetComponentInParent<Enemy>();
-            if (enemy != null)
+            var enemy = _results[i].collider.GetComponentInParent<Npc>();
+            if (enemy != null && !enemy.ownedByPlayer && !enemy.isDestroyed)
             {
                 _target = enemy;
                 return true;
