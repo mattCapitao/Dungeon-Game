@@ -4,11 +4,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class Npc : ITarget
+public class Npc : ITarget // INHERITANCE
 {
     private StateMachine _stateMachine;
 
-    public Pillar TargetPillar { get; set; }
+    public Pillar TargetPillar { get; set; } // ENCAPSULATION
     public Npc TargetNpc { get; set; }
 
 
@@ -70,12 +70,12 @@ public class Npc : ITarget
 
     }
 
-    public override void TakeDamage(int dmg, Vector3 launchVelosity)
+    public override void TakeDamage(int dmg, Vector3 launchVelosity) // POLYMORPHISM
     {
         deathLaunchVelocity = launchVelosity;
         _health -= dmg;
         if (_health <= 0)
-            Die();
+            Die(); // ABSTRACTION 
     }
 
 
