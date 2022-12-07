@@ -14,10 +14,8 @@ public class Npc : ITarget
     public Npc TargetNpc { get; set; }
 
 
-   // public int _health;
     public int _attackDamage = 1;
-    //public bool isDestroyed;
-    //public bool ownedByPlayer;
+
     public Vector3 deathLaunchVelocity;
 
     private void Awake()
