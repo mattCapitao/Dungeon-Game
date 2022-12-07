@@ -34,19 +34,20 @@ public class Trap : MonoBehaviour
     public void TriggerTrap()
     {
         foreach (var enemy in _enemies)
-            enemy.Die(Vector3.up * 5);
+            if (enemy != null && !enemy.isDestroyed)
+                enemy.TakeDamage(3,Vector3.up * 5);
     }
     private void OnTriggerEnter(Collider other)
     {
         var enemy = other.GetComponent<Npc>();
-        if (enemy != null)
+        if (enemy != null && !enemy.isDestroyed)
             _enemies.Add(enemy);
     }
 
     private void OnTriggerExit(Collider other)
     {
         var enemy = other.GetComponent<Npc>();
-        if (enemy != null)
+        if (enemy != null && !enemy.isDestroyed)
             _enemies.Remove(enemy);
     }
 }

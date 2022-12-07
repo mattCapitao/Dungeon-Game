@@ -70,22 +70,14 @@ public class Npc : ITarget
 
     }
 
-    public new void TakeDamage(int dmg, Vector3 launchVelosity)
+    public override void TakeDamage(int dmg, Vector3 launchVelosity)
     {
-        // GetComponentInChildren<Animator>().SetTrigger("Impact");
+        deathLaunchVelocity = launchVelosity;
         _health -= dmg;
         if (_health <= 0)
-            Die(launchVelosity);
+            Die();
     }
 
-    public new void Die(Vector3 launchVelosity)
-    {
-        if (launchVelosity == null) launchVelosity = Vector3.zero;
-        if (isDestroyed) return;
-        deathLaunchVelocity = launchVelosity;
-        isDestroyed = true;
-        Destroy(gameObject, 3);
-    }
 
     private void OnTriggerEnter(Collider other)
     {

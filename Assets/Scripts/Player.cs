@@ -32,6 +32,7 @@ public class Player : MonoBehaviour
         {
             if (Input.GetMouseButtonDown(0) && _target == null)
             {
+
                 FaceDestination(_navMeshAgent.destination);
             }
 
@@ -39,6 +40,7 @@ public class Player : MonoBehaviour
         }
         else if (_target != null)
         {
+
             MoveToTarget();
         }
 
@@ -72,7 +74,7 @@ public class Player : MonoBehaviour
         Vector3 launchVelosity = transform.forward + transform.up;
         launchVelosity *= _launchPower;
 
-        StartCoroutine(DamageEnemy( launchVelosity)); 
+        StartCoroutine(DamageEnemy(launchVelosity)); 
     }
 
     IEnumerator DamageEnemy(Vector3 launchVelosity) // delay to time damage with attack animation
@@ -80,8 +82,8 @@ public class Player : MonoBehaviour
         yield return new WaitForSeconds(.5f);
         if (_target.GetComponent<Npc>())
             _target = _target.GetComponent<Npc>();
-
-        _target.TakeDamage( _attackDamage, launchVelosity);
+        if(_target != null)
+            _target.TakeDamage( _attackDamage, launchVelosity);
     }
     
 
@@ -89,18 +91,21 @@ public class Player : MonoBehaviour
     {
         _navMeshAgent.enabled = true;
         _navMeshAgent.SetDestination(_target.transform.position);
-
-        FaceDestination(_target.transform.position);
+        if(_target!=null)
+            FaceDestination(_target.transform.position);
     }
 
-    private void FaceDestination(Vector3 loc)
+    private void FaceDestination(Vector3 location)
     {
-        var targetRotation = Quaternion.LookRotation(loc - transform.position);
+        if (location == null) return;
+        var targetRotation = Quaternion.LookRotation( location - transform.position);
         transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, 4 * Time.deltaTime);
     }
 
     void HandleClick()
     {
+        _navMeshAgent.enabled = true;
+
         Ray ray = _camMain.ScreenPointToRay(Input.mousePosition);
 
         int hits = Physics.RaycastNonAlloc(ray, _results);

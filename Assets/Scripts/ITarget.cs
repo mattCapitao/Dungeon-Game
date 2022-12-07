@@ -11,20 +11,23 @@ public class ITarget : MonoBehaviour
     public bool ownedByPlayer;
 
 
-    private void OnEnable()
+    protected void OnEnable()
     {
         _health = _maxHealth;
     }
 
-    public void TakeDamage(int dmg, Vector3 launchVelosity)
+    public virtual void TakeDamage(int dmg, Vector3 launchVelosity)
     {
-        if (launchVelosity == null) launchVelosity = Vector3.zero;
+
+        if (GetComponent<Npc>()) 
+            GetComponent<Npc>().deathLaunchVelocity = launchVelosity;
+
         _health -= dmg;
         if (_health <= 0)
-            Die(launchVelosity);
+            Die();
     }
 
-    public void Die(Vector3 launchVelosity)
+    public virtual void Die()
     {
         isDestroyed = true;
         if(GetComponent<Pillar>())

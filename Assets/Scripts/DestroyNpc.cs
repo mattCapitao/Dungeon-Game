@@ -3,13 +3,13 @@ using UnityEngine.AI;
 
 internal class DestroyNpc : IState
 {
-    private Npc _npcController;
+    private Npc _npc;
     private NavMeshAgent _navMeshAgent;
     private Animator _animator;
 
-    public DestroyNpc(Npc npcController, NavMeshAgent navMeshAgent, Animator animator)
+    public DestroyNpc(Npc npc, NavMeshAgent navMeshAgent, Animator animator)
     {
-        _npcController = npcController;
+        _npc = npc;
         _navMeshAgent = navMeshAgent;
         _animator = animator;
     }
@@ -20,14 +20,15 @@ internal class DestroyNpc : IState
     public void OnEnter() {
         _navMeshAgent.enabled = false;
         _animator.enabled = false;
-        _npcController.GetComponent<Collider>().enabled = false;
+        _npc.GetComponent<Collider>().enabled = false;
 
-        var rigidbodies = _npcController.GetComponentsInChildren<Rigidbody>();
+        var rigidbodies = _npc.GetComponentsInChildren<Rigidbody>();
         foreach (var rb in rigidbodies)
         {
-            rb.velocity = _npcController.deathLaunchVelocity;
+
+            rb.velocity = _npc.deathLaunchVelocity;
         }
-        GameObject.Destroy(_npcController.gameObject, 3f);
+        GameObject.Destroy(_npc.gameObject, 3f);
     }
 
     public void OnExit() { }
