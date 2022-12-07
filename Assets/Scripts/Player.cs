@@ -9,8 +9,9 @@ public class Player : MonoBehaviour
     Camera _camMain;
     NavMeshAgent _navMeshAgent;
     Animator _animator;
-    Npc _target;
+    ITarget _target;
     float _nextAttackTime;
+    int _attackDamage = 3;
 
     [SerializeField] float _attackDistance = .5f;
     [SerializeField] float _attackDelay = 2f;
@@ -24,7 +25,7 @@ public class Player : MonoBehaviour
     }
     void Update()
     {
-        _animator.SetBool("Walk", _navMeshAgent.velocity.magnitude > 0);
+        _animator.SetBool("Walk", _navMeshAgent.velocity.magnitude > 0.001f);
         
 
         if (Input.GetMouseButton(0))
@@ -48,7 +49,9 @@ public class Player : MonoBehaviour
 
     private bool ReadyToAttack()
     {
+        
         if (_target == null) return false;
+        if (_target.isDestroyed) { _target = null; return false; }
 
         float distanceToTarget = Vector3.Distance(transform.position, _target.transform.position);
 
@@ -63,24 +66,28 @@ public class Player : MonoBehaviour
 
     private void AttackTarget()
     {
-        
+        _navMeshAgent.enabled = false;
         _nextAttackTime = Time.time + _attackDelay;
         _animator.SetTrigger("Attack");
-        var launchVelosity = transform.forward + transform.up;
+        Vector3 launchVelosity = transform.forward + transform.up;
         launchVelosity *= _launchPower;
 
-        StartCoroutine(KillEnemy(_target, launchVelosity));
-        _target = null;
+        StartCoroutine(DamageEnemy( launchVelosity)); 
     }
 
-    IEnumerator KillEnemy(Npc target, Vector3 launchVelosity)
+    IEnumerator DamageEnemy(Vector3 launchVelosity) // delay to time damage with attack animation
     {
         yield return new WaitForSeconds(.5f);
-        target.Die(launchVelosity);
+        if (_target.GetComponent<Npc>())
+            _target = _target.GetComponent<Npc>();
+
+        _target.TakeDamage( _attackDamage, launchVelosity);
     }
+    
 
     private void MoveToTarget()
     {
+        _navMeshAgent.enabled = true;
         _navMeshAgent.SetDestination(_target.transform.position);
 
         FaceDestination(_target.transform.position);
@@ -100,6 +107,10 @@ public class Player : MonoBehaviour
 
         if (TrySetEnemyTarget(hits))
             return;
+
+        if (TrySetPillarTarget(hits))
+            return;
+
         TrySetGroundTarget(hits);
     }
 
@@ -108,6 +119,20 @@ public class Player : MonoBehaviour
         for (int i = 0; i < hits; i++)
         {
             var enemy = _results[i].collider.GetComponentInParent<Npc>();
+            if (enemy != null && !enemy.ownedByPlayer && !enemy.isDestroyed)
+            {
+                _target = enemy;
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private bool TrySetPillarTarget(int hits)
+    {
+        for (int i = 0; i < hits; i++)
+        {
+            var enemy = _results[i].collider.GetComponentInChildren<Pillar>();
             if (enemy != null && !enemy.ownedByPlayer && !enemy.isDestroyed)
             {
                 _target = enemy;

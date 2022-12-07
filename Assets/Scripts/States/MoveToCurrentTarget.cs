@@ -9,7 +9,7 @@ internal class MoveToCurrentTarget : IState
 
     private Vector3 _lastPosition = Vector3.zero;
 
-    private float TimeStuck;
+    public float TimeStuck;
 
     public MoveToCurrentTarget(Npc npc, NavMeshAgent navMeshAgent, Animator animator)
     {
@@ -21,9 +21,10 @@ internal class MoveToCurrentTarget : IState
 
     public void Tick()
     {
-        if (Vector3.Distance(_npc.transform.position, _lastPosition) <= 0f)
+        if (Vector3.Distance(_npc.transform.position, _lastPosition) <= .001f)
             TimeStuck += Time.deltaTime;
-
+        
+        _lastPosition = _npc.transform.position;
     }
 
     public void OnEnter()
@@ -33,7 +34,7 @@ internal class MoveToCurrentTarget : IState
         _navMeshAgent.enabled = true;
         _animator.SetBool("Walk", true);
 
-        if (_npc.TargetNpc != null)
+        if (_npc.TargetNpc != null && !_npc.TargetNpc.isDestroyed)
         {
             _navMeshAgent.SetDestination(_npc.TargetNpc.transform.position);
             return;

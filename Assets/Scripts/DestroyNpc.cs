@@ -27,7 +27,7 @@ internal class DestroyNpc : IState
         {
             rb.velocity = _npcController.deathLaunchVelocity;
         }
-        GameObject.Destroy(_npcController.gameObject, 5f);
+        GameObject.Destroy(_npcController.gameObject, 3f);
     }
 
     public void OnExit() { }

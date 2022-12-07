@@ -13,9 +13,10 @@ GameObject:
   - component: {fileID: 6103800174904062671}
   - component: {fileID: -6399890056265665303}
   - component: {fileID: 1034649065638216553}
+  - component: {fileID: 4332678801627849582}
   m_Layer: 0
   m_Name: Skeleton Red
-  m_TagString: Untagged
+  m_TagString: Npc
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -46,7 +47,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.7
-  m_Speed: 1
+  m_Speed: 1.5
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 120
@@ -68,7 +69,7 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 0.5
+  m_Radius: 1.25
   m_Height: 1.8580859
   m_Direction: 1
   m_Center: {x: 0, y: 0.92090666, z: 0}
@@ -100,9 +101,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8a9e30ba3d107c9458d9474a19c09ef0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _maxHealth: 3
+  _health: 0
   _attackDamage: 1
   isDestroyed: 0
   ownedByPlayer: 0
+  deathLaunchVelocity: {x: 0, y: 0, z: 0}
+--- !u!135 &4332678801627849582
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6103800174904062667}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 1.2
+  m_Center: {x: 0, y: 1.25, z: 0}
 --- !u!1001 &6103800173168341071
 PrefabInstance:
   m_ObjectHideFlags: 0

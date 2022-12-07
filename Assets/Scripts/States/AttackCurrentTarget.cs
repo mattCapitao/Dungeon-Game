@@ -18,23 +18,23 @@ internal class AttackCurrentTarget : IState
     public void Tick()
     {
 
-        if (_npc.TargetNpc != null && _npc.TargetNpc.isDestroyed == false && _npc.ownedByPlayer != _npc.TargetNpc.ownedByPlayer)
+        if (_npc.TargetNpc != null && !_npc.TargetNpc.isDestroyed  && _npc.ownedByPlayer != _npc.TargetNpc.ownedByPlayer)
         {
             if (_nextAttackTime <= Time.time)
             {
                 _nextAttackTime = Time.time + (1f / _hitsPerSecond);
                 _animator.SetTrigger("Attack");
-                _npc.TargetNpc.TakeDamage(_npc._attackDamage);
+                _npc.TargetNpc.TakeDamage(_npc._attackDamage, _npc.deathLaunchVelocity);
             }
         }
 
-        if (_npc.TargetPillar != null && _npc.TargetPillar.isDestroyed == false && _npc.ownedByPlayer != _npc.TargetPillar.ownedByPlayer)
+        if (_npc.TargetPillar != null && !_npc.TargetPillar.isDestroyed  && _npc.ownedByPlayer != _npc.TargetPillar.ownedByPlayer)
         {
             if (_nextAttackTime <= Time.time)
             {
                 _nextAttackTime = Time.time + (1f / _hitsPerSecond);
                 _animator.SetTrigger("Attack");
-                _npc.TargetPillar.TakeDamage(_npc._attackDamage);
+                _npc.TargetPillar.TakeDamage(_npc._attackDamage, Vector3.zero);
             }
         }
         

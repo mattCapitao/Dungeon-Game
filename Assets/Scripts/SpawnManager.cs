@@ -7,10 +7,12 @@ public class SpawnManager : MonoBehaviour
     private float _nextSpawnTime;
     private GameObject _prefab;
 
-
+    private bool playerSpawn;
+    private GameObject[] _spawnPoints;
     [SerializeField] float spawnDelay = 3f;
    
-    [SerializeField] GameObject[] _spawnPoints;
+    [SerializeField] GameObject[] _playerSpawnPoints;
+    [SerializeField] GameObject[] _enemySpawnPoints;
 
     void Update()
     {
@@ -22,7 +24,14 @@ public class SpawnManager : MonoBehaviour
 
     private void Spawn()
     {
-        
+        playerSpawn = !playerSpawn;
+
+        _spawnPoints = _enemySpawnPoints;
+
+        if (playerSpawn)
+        {
+           _spawnPoints = _playerSpawnPoints;
+        }
         _nextSpawnTime = Time.time + spawnDelay;
 
         GameObject _spawnPoint = _spawnPoints[Random.Range(0, _spawnPoints.Length)];
