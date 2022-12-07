@@ -71,12 +71,7 @@ public class Npc : ITarget
         _stateMachine.Tick();
 
     }
-    /*
-    private void OnEnable()
-    {
-        _health = _maxHealth;
-    }
-    */
+
     public new void TakeDamage(int dmg, Vector3 launchVelosity)
     {
         // GetComponentInChildren<Animator>().SetTrigger("Impact");
