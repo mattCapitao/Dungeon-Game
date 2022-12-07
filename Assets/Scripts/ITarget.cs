@@ -29,6 +29,6 @@ public class ITarget : MonoBehaviour
         isDestroyed = true;
         if(GetComponent<Pillar>())
             GetComponent<MeshRenderer>().enabled = false;
-        //SceneManager.LoadScene(0);
+
     }
 }
