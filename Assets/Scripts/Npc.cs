@@ -6,8 +6,6 @@ using UnityEngine.AI;
 
 public class Npc : ITarget
 {
-   // public new int _maxHealth = 3;
-
     private StateMachine _stateMachine;
 
     public Pillar TargetPillar { get; set; }
