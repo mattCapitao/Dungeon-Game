@@ -7,32 +7,5 @@ using UnityEngine.SceneManagement;
 public class Pillar :ITarget
 {
 
- 
-    // public new int _maxHealth = 100;
-    // int _health;
-
-    // public bool isDestroyed;
-    //public bool ownedByPlayer;
-    /*
-    private void OnEnable()
-    {
-        
-        _health = _maxHealth;
-    }
-    */
-    /*
-    public void TakeDamage(int dmg)
-    {
-        _health -= dmg;
-        if (_health <= 0)
-            Die();
-    }
-   
-
-    private void Die()
-    {
-        isDestroyed = true;
-        GetComponent<MeshRenderer>().enabled = false; 
-        //SceneManager.LoadScene(0);
-    } */
+// no difference from parent Target Class
 }

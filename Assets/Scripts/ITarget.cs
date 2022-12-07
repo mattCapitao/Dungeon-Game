@@ -10,7 +10,6 @@ public class ITarget : MonoBehaviour
     public bool isDestroyed;
     public bool ownedByPlayer;
 
-    
 
     private void OnEnable()
     {
