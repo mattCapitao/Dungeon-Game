@@ -124,7 +124,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 288f250505862514ebd77da00731f24c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _maxHealth: 100
+  _maxHealth: 50
+  _health: 0
   isDestroyed: 0
   ownedByPlayer: 1
 --- !u!1001 &2732806501952630270

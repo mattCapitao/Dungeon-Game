@@ -18,10 +18,6 @@ public class ITarget : MonoBehaviour
 
     public virtual void TakeDamage(int dmg, Vector3 launchVelosity)
     {
-
-        if (GetComponent<Npc>()) 
-            GetComponent<Npc>().deathLaunchVelocity = launchVelosity;
-
         _health -= dmg;
         if (_health <= 0)
             Die();
@@ -30,8 +26,5 @@ public class ITarget : MonoBehaviour
     public virtual void Die()
     {
         isDestroyed = true;
-        if(GetComponent<Pillar>())
-            GetComponent<MeshRenderer>().enabled = false;
-
     }
 }

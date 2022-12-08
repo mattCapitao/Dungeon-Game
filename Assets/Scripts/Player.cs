@@ -110,39 +110,43 @@ public class Player : MonoBehaviour
 
         int hits = Physics.RaycastNonAlloc(ray, _results);
 
-        if (TrySetEnemyTarget(hits))
-            return;
-
-        if (TrySetPillarTarget(hits))
+        if (TrySetAttackTarget(hits))
             return;
 
         TrySetGroundTarget(hits);
     }
 
-    private bool TrySetEnemyTarget(int hits)
+    private bool ValidAttackTarget(ITarget enemy)
     {
-        for (int i = 0; i < hits; i++)
+        if (enemy != null && !enemy.ownedByPlayer && !enemy.isDestroyed)
         {
-            var enemy = _results[i].collider.GetComponentInParent<Npc>();
-            if (enemy != null && !enemy.ownedByPlayer && !enemy.isDestroyed)
-            {
-                _target = enemy;
-                return true;
-            }
+            _target = enemy;
+            return true;
         }
         return false;
     }
 
-    private bool TrySetPillarTarget(int hits)
+    private bool TrySetAttackTarget(int hits)
     {
+        ITarget enemy;
         for (int i = 0; i < hits; i++)
         {
-            var enemy = _results[i].collider.GetComponentInChildren<Pillar>();
-            if (enemy != null && !enemy.ownedByPlayer && !enemy.isDestroyed)
-            {
-                _target = enemy;
+             enemy = _results[i].collider.GetComponentInParent<Npc>();
+            if (ValidAttackTarget(enemy))
                 return true;
-            }
+
+             enemy = _results[i].collider.GetComponentInChildren<Pillar>();
+            if (ValidAttackTarget(enemy))
+                return true;
+
+            enemy = _results[i].collider.GetComponent<Tower>();
+            if (ValidAttackTarget(enemy))
+                return true;
+
+            enemy = _results[i].collider.GetComponent<Castle>();
+            if (ValidAttackTarget(enemy))
+                return true;
+
         }
         return false;
     }

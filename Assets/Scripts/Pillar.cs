@@ -7,5 +7,12 @@ using UnityEngine.SceneManagement;
 public class Pillar : ITarget
 {
 
-// no difference from parent Target Class this class is only used to give object type Pillar
+    // no difference from parent Target Class this class is only used to give object type Pillar
+
+    public override void Die()
+    {
+        isDestroyed = true;
+        GetComponent<MeshRenderer>().enabled = false;
+
+    }
 }
