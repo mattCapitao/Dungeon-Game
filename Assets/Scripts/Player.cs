@@ -80,10 +80,15 @@ public class Player : MonoBehaviour
     IEnumerator DamageEnemy(Vector3 launchVelosity) // delay to time damage with attack animation
     {
         yield return new WaitForSeconds(.5f);
-        if (_target.GetComponent<Npc>())
-            _target = _target.GetComponent<Npc>();
+
         if(_target != null)
-            _target.TakeDamage( _attackDamage, launchVelosity);
+        {
+            if (_target.GetComponent<Npc>())
+                _target = _target.GetComponent<Npc>();
+
+            _target.TakeDamage(_attackDamage, launchVelosity);
+        }
+        
     }
     
 
@@ -98,9 +103,11 @@ public class Player : MonoBehaviour
     private void FaceDestination(Vector3 location)
     {
         if (location == null) return;
-        var targetRotation = Quaternion.LookRotation( location - transform.position);
-        transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, 4 * Time.deltaTime);
+        var targetRotation = Quaternion.LookRotation(location - transform.position);
+        //transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, 4 * Time.deltaTime);
+        transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.Euler(new Vector3(0f, targetRotation.eulerAngles.y, 0f)), .001f * Time.deltaTime);
     }
+
 
     void HandleClick()
     {
