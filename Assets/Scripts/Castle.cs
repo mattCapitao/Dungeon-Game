@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class Castle : ITarget
 {
-    [SerializeField] Tower _tower;
+    public Tower tower;
 
     public override void TakeDamage(int dmg, Vector3 launchVelosity)
     {
-        if (!_tower.isDestroyed)
+        if (!tower.isDestroyed)
         {
             Debug.Log("This castle cannot be damaged while its tower is intact");
             return;

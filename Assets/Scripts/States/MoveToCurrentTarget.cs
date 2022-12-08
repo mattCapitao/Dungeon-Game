@@ -34,15 +34,11 @@ internal class MoveToCurrentTarget : IState
         _navMeshAgent.enabled = true;
         _animator.SetBool("Walk", true);
 
-        if (_npc.TargetNpc != null && !_npc.TargetNpc.isDestroyed)
+        if (_npc.Target != null && !_npc.Target.isDestroyed)
         {
-            _navMeshAgent.SetDestination(_npc.TargetNpc.transform.position);
+            _navMeshAgent.SetDestination(_npc.Target.transform.position);
             return;
         }
-
-        _navMeshAgent.SetDestination(_npc.TargetPillar.transform.position);
-        
-
     }
 
     public void OnExit()

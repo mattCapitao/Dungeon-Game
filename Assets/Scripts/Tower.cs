@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class Tower : ITarget
 {
-    [SerializeField] Pillar _pillar;
+    public Pillar pillar;
 
     public override void TakeDamage(int dmg, Vector3 launchVelosity)
     {
-        if (!_pillar.isDestroyed)
+        if (!pillar.isDestroyed)
         {
             Debug.Log("This tower cannot be damaged while its pillar is intact");
             return;
