@@ -13,7 +13,7 @@ public class Castle : ITarget
             Debug.Log("This castle cannot be damaged while its tower is intact");
             return;
         }
-
+        hitclip.Play();
         _health -= dmg;
         if (_health <= 0)
             Die();

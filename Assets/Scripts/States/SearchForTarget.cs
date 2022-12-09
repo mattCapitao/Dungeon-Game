@@ -21,19 +21,19 @@ public class SearchForTarget :IState
     private void SelectBestTarget() 
     {
 
-       // if (TryGetNpcTarget()) return;
+        if (TryGetHeroTarget()) return;
         if (TryGetCastleTarget()) return;
         if (TryGetTowerTarget()) return;
         if (TryGetPillarTarget()) return;
 
     }
 
-    private bool TryGetNpcTarget()
+    private bool TryGetHeroTarget()
     {
-        Npc npcTarget = Object.FindObjectsOfType<Npc>()
+        Npc npcTarget = Object.FindObjectsOfType<NpcHero>()
                 .OrderBy(npc => Vector3.Distance(_npc.gameObject.transform.position, npc.transform.position))
                  .Where(npc => (npc.ownedByPlayer != _npc.ownedByPlayer) && (npc.isDestroyed == false) &&
-                 Vector3.Distance(_npc.gameObject.transform.position, npc.transform.position) <= 3)
+                 Vector3.Distance(_npc.gameObject.transform.position, npc.transform.position) <= 10)
                  .Take(1)
                  .OrderBy(npc => Random.Range(0, int.MaxValue))
                  .FirstOrDefault();

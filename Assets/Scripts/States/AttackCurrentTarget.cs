@@ -19,7 +19,7 @@ internal class AttackCurrentTarget : IState
     {
        Vector3 launchVelosity = Vector3.zero;
 
-        if (_npc.Target != null && !_npc.Target.isDestroyed && _npc.ownedByPlayer != _npc.Target.ownedByPlayer)
+        if (_npc.Target != null && !_npc.Target.isDestroyed && _npc.ownedByPlayer != _npc.Target.ownedByPlayer && Vector3.Distance(_npc.transform.position, _npc.Target.transform.position) <= 1.75f)
         {
             if (_nextAttackTime <= Time.time)
             {

@@ -18,17 +18,18 @@ internal class DestroyNpc : IState
     public void Tick() { }
 
     public void OnEnter() {
+        GameObject.Destroy(_npc.gameObject, 2f);
         _navMeshAgent.enabled = false;
         _animator.enabled = false;
-        _npc.GetComponent<Collider>().enabled = false;
+        _npc.GetComponent<CapsuleCollider>().enabled = false;
+        _npc.GetComponent<SphereCollider>().enabled = false;
 
         var rigidbodies = _npc.GetComponentsInChildren<Rigidbody>();
         foreach (var rb in rigidbodies)
         {
-
             rb.velocity = _npc.deathLaunchVelocity;
         }
-        GameObject.Destroy(_npc.gameObject, 3f);
+        
     }
 
     public void OnExit() { }

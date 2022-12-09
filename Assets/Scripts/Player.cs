@@ -13,7 +13,7 @@ public class Player : MonoBehaviour
     float _nextAttackTime;
     int _attackDamage = 3;
 
-    [SerializeField] float _attackDistance = .5f;
+    [SerializeField] float _attackDistance = 3f;
     [SerializeField] float _attackDelay = 2f;
     [SerializeField] float _launchPower = 3.5f;
 
@@ -111,6 +111,7 @@ public class Player : MonoBehaviour
 
     void HandleClick()
     {
+        Debug.Log("Click handler called");
         _navMeshAgent.enabled = true;
 
         Ray ray = _camMain.ScreenPointToRay(Input.mousePosition);
@@ -118,7 +119,11 @@ public class Player : MonoBehaviour
         int hits = Physics.RaycastNonAlloc(ray, _results);
 
         if (TrySetAttackTarget(hits))
+        {
+            Debug.Log("Attack Target Set");
             return;
+        }
+            
 
         TrySetGroundTarget(hits);
     }
@@ -138,7 +143,12 @@ public class Player : MonoBehaviour
         ITarget enemy;
         for (int i = 0; i < hits; i++)
         {
-             enemy = _results[i].collider.GetComponentInParent<Npc>();
+
+            enemy = _results[i].collider.GetComponent<NpcHero>();
+            if (ValidAttackTarget(enemy))
+                return true;
+
+            enemy = _results[i].collider.GetComponentInParent<Npc>();
             if (ValidAttackTarget(enemy))
                 return true;
 

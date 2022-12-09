@@ -13,7 +13,7 @@ public class Tower : ITarget
             Debug.Log("This tower cannot be damaged while its pillar is intact");
             return;
         }
-
+        hitclip.Play();
         _health -= dmg;
         if (_health <= 0)
             Die();

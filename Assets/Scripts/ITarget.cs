@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class ITarget : MonoBehaviour
 {
+    public AudioSource hitclip;
+    public AudioSource dieclip;
+
     public int _maxHealth = 0;
     public int _health;
 
@@ -18,6 +21,7 @@ public class ITarget : MonoBehaviour
 
     public virtual void TakeDamage(int dmg, Vector3 launchVelosity)
     {
+        hitclip.Play();
         _health -= dmg;
         if (_health <= 0)
             Die();
