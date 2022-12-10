@@ -49,7 +49,7 @@ public class SearchForTarget :IState
     {
         Castle castleTarget = Object.FindObjectsOfType<Castle>()
                     .OrderBy(castle => Vector3.Distance(_npc.gameObject.transform.position, castle.transform.position))
-                    .Where(castle => (castle.ownedByPlayer != _npc.ownedByPlayer) && (castle.isDestroyed == false) && (castle.tower.isDestroyed) )
+                    .Where(castle => (castle.ownedByPlayer != _npc.ownedByPlayer) && (castle.isDestroyed == false) && castle.AllTowersDestroyed() )
                     .OrderBy(castle => Random.Range(0, int.MaxValue))
                     .Take(1)
                     .FirstOrDefault();
