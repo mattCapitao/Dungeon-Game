@@ -15,18 +15,42 @@ public class SearchForTarget :IState
 
     public void Tick()
     {
-        SelectBestTarget();
+        if(_npc.Target != null)
+        {
+            if (_npc.Target.isDestroyed)
+             _npc.Target = null;
+        }
+       
+            SelectBestTarget();
     }
 
     private void SelectBestTarget() 
     {
 
+        if (TryLastTarget()) return;
         if (TryGetHeroTarget()) return;
         if (TryGetCastleTarget()) return;
         if (TryGetTowerTarget()) return;
         if (TryGetPillarTarget()) return;
 
     }
+
+    private bool TryLastTarget()
+    {
+        if (_npc.lastTarget != null && !_npc.lastTarget.isDestroyed )
+        {
+            if (!_npc.lastTarget.CompareTag("Npc"))
+            {
+                _npc.Target = _npc.lastTarget;
+                return true;
+            }
+            
+            _npc.lastTarget = null;
+        }
+
+        return false;
+    }
+    
 
     private bool TryGetHeroTarget()
     {
@@ -97,7 +121,7 @@ public class SearchForTarget :IState
     }
 
     public void OnEnter() {
-
+        _npc.currentState = "search";
     }
-    public void OnExit() { }
+    public void OnExit() { _npc.currentState = "Exited search"; }
 }

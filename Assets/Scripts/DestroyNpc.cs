@@ -18,7 +18,9 @@ internal class DestroyNpc : IState
     public void Tick() { }
 
     public void OnEnter() {
-        GameObject.Destroy(_npc.gameObject, 2f);
+
+        _npc.currentState = "destroy";
+
         _navMeshAgent.enabled = false;
         _animator.enabled = false;
         _npc.GetComponent<CapsuleCollider>().enabled = false;
@@ -29,8 +31,10 @@ internal class DestroyNpc : IState
         {
             rb.velocity = _npc.deathLaunchVelocity;
         }
-        
+
+        GameObject.Destroy(_npc.gameObject, 2f);
+
     }
 
-    public void OnExit() { }
+    public void OnExit() { _npc.currentState = "destroyed?"; }
 }

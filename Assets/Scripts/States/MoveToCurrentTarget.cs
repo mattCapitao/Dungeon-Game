@@ -29,7 +29,7 @@ internal class MoveToCurrentTarget : IState
 
     public void OnEnter()
     {
-
+        _npc.currentState = "moveToTarget";
         TimeStuck = 0f;
         _navMeshAgent.enabled = true;
         _animator.SetBool("Walk", true);
@@ -43,6 +43,7 @@ internal class MoveToCurrentTarget : IState
 
     public void OnExit()
     {
+        _npc.currentState = "Exited moveToTarget";
         _navMeshAgent.enabled = false;
         _animator.SetBool("Walk", false);
     }

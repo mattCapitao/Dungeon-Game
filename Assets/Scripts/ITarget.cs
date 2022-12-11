@@ -13,7 +13,6 @@ public class ITarget : MonoBehaviour
     public bool isDestroyed;
     public bool ownedByPlayer;
 
-
     protected void OnEnable()
     {
         _health = _maxHealth;

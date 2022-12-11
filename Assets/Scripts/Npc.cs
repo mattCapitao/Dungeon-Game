@@ -18,6 +18,10 @@ public class Npc : ITarget // INHERITANCE
     public ITarget Target { get; set; }
 
     public ITarget currentTarget;
+    public ITarget lastTarget;
+    public string currentState;
+
+    public float meleAttackRange = 2.5f;
 
 
     public int _attackDamage = 1;
@@ -36,12 +40,21 @@ public class Npc : ITarget // INHERITANCE
         var moveToTarget = new MoveToCurrentTarget(this, navMeshAgent, animator);
         var attack = new AttackCurrentTarget(this, animator);
         var die = new DestroyNpc(this, navMeshAgent, animator);
+        var clearTargets = new ClearTargets(this);
 
-        At(search, moveToTarget, HasTarget());
-        At(moveToTarget, attack, ReachedTarget());
-        At(attack, moveToTarget, TargetOutOfRange());
+        At(search, moveToTarget, TargetOutOfMeleRange());
+        At(search, attack, TargetInMeleRange());
+
+
         At(attack, search, TargetDestroyed());
-        At(moveToTarget, search, StuckTimeOut());
+        At(attack, moveToTarget, TargetOutOfMeleRange());
+       
+
+        At(moveToTarget, attack, TargetInMeleRange());
+        At(moveToTarget, search, TargetDestroyed());
+        At(moveToTarget, clearTargets, StuckTimeOut());
+
+        At(clearTargets, search, TargetsClear());
 
         _stateMachine.AddAnyTransition(die, () => isDestroyed);
 
@@ -50,17 +63,19 @@ public class Npc : ITarget // INHERITANCE
         void At(IState to, IState from, Func<bool> condition) => _stateMachine.AddTransition(to, from, condition);
 
 
-        Func<bool> HasTarget() => () => Target != null && !Target.isDestroyed;
+        //Func<bool> HasTarget() => () => Target != null && !Target.isDestroyed;
 
-        Func<bool> ReachedTarget() => () => Target != null && !Target.isDestroyed &&
-            Vector3.Distance(transform.position, Target.transform.position) <= 1.75f;
+        Func<bool> TargetInMeleRange() => () => !isDestroyed && Target != null && !Target.isDestroyed &&
+            Vector3.Distance(transform.position, Target.transform.position) <= meleAttackRange;
 
-        Func<bool> TargetOutOfRange() => () => Target != null && !Target.isDestroyed &&
-            Vector3.Distance(transform.position, Target.transform.position) > 1.75f;
+        Func<bool> TargetOutOfMeleRange() => () => !isDestroyed && Target != null && !Target.isDestroyed &&
+            Vector3.Distance(transform.position, Target.transform.position) > meleAttackRange;
 
-        Func<bool> TargetDestroyed() => () => Target == null || Target.isDestroyed ;
+        Func<bool> TargetDestroyed() => () => !isDestroyed && Target.isDestroyed ;
 
-        Func<bool> StuckTimeOut() => () => moveToTarget.TimeStuck > 1f;
+        Func<bool> StuckTimeOut() => () => !isDestroyed && moveToTarget.TimeStuck > 3f;
+
+        Func<bool> TargetsClear() => () => !isDestroyed && Target == null && currentTarget == null && lastTarget == null;
 
     }
 
@@ -88,11 +103,15 @@ public class Npc : ITarget // INHERITANCE
     {
         isDestroyed = true;
         dieclip.Play();
+        Destroy(this, 2);
+        
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.transform.IsChildOf(transform) || !other.CompareTag("Npc")) return;
+        if (other == null || Target == null) return;
+
+        if (other.transform.IsChildOf(transform) || !other.CompareTag("Npc") || Target.CompareTag("Npc")) return;
 
         var npcTarget = other.gameObject.GetComponent<Npc>();
 
@@ -100,6 +119,8 @@ public class Npc : ITarget // INHERITANCE
         {
             if (npcTarget != null && !npcTarget.isDestroyed)
             {
+                if (Target != null)
+                    lastTarget = Target;
                 Target = npcTarget;
                 return;
             }
