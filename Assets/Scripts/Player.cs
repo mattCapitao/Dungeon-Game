@@ -73,7 +73,7 @@ public class Player : MonoBehaviour
         _animator.SetTrigger("Attack");
         Vector3 launchVelosity = transform.forward + transform.up;
         launchVelosity *= _launchPower;
-
+        FaceDestination(_target.transform.position);
         StartCoroutine(DamageEnemy(launchVelosity)); 
     }
 
@@ -96,16 +96,16 @@ public class Player : MonoBehaviour
     {
         _navMeshAgent.enabled = true;
         _navMeshAgent.SetDestination(_target.transform.position);
-        if(_target!=null)
-            FaceDestination(_target.transform.position);
+        
+        //if(_target!=null)
+          //  FaceDestination(_target.transform.position);
     }
 
     private void FaceDestination(Vector3 location)
     {
         if (location == null) return;
         var targetRotation = Quaternion.LookRotation(location - transform.position);
-        //transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, 4 * Time.deltaTime);
-        transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.Euler(new Vector3(0f, targetRotation.eulerAngles.y, 0f)), .001f * Time.deltaTime);
+        transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.Euler(new Vector3(0f, targetRotation.eulerAngles.y, 0f)), 10 * Time.deltaTime);
     }
 
 

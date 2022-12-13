@@ -4,25 +4,22 @@ using UnityEngine.AI;
 internal class DestroyNpc : IState
 {
     private Npc _npc;
-    private NavMeshAgent _navMeshAgent;
-    private Animator _animator;
 
-    public DestroyNpc(Npc npc, NavMeshAgent navMeshAgent, Animator animator)
+    public DestroyNpc(Npc npc)
     {
         _npc = npc;
-        _navMeshAgent = navMeshAgent;
-        _animator = animator;
-    }
 
+    }
 
     public void Tick() { }
 
     public void OnEnter() {
 
         _npc.currentState = "destroy";
-
-        _navMeshAgent.enabled = false;
-        _animator.enabled = false;
+        _npc.dieclip.Play();
+        _npc.isDestroyed = true;
+        _npc.GetComponent<NavMeshAgent>().enabled = false;
+        _npc.GetComponent <Animator>().enabled = false;
         _npc.GetComponent<CapsuleCollider>().enabled = false;
         _npc.GetComponent<SphereCollider>().enabled = false;
 
@@ -32,9 +29,18 @@ internal class DestroyNpc : IState
             rb.velocity = _npc.deathLaunchVelocity;
         }
 
+        if (_npc.ownedByPlayer)
+        {
+            SpawnManager.Instance.blueSpawnCount--;
+        }
+        else
+        {
+            SpawnManager.Instance.redSpawnCount--;
+        }
+
         GameObject.Destroy(_npc.gameObject, 2f);
 
     }
 
-    public void OnExit() { _npc.currentState = "destroyed?"; }
+    public void OnExit() { }
 }

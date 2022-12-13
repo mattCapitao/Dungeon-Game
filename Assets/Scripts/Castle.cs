@@ -46,6 +46,21 @@ public class Castle : ITarget
             Debug.Log("Player Defeat");
         }
 
-        GetComponentInChildren<MeshRenderer>().enabled = false;
+        
+        
+        gameObject.SetActive(false);
+
+        /*
+         *foreach (MeshRenderer meshRenderer in this.GetComponentsInChildren<MeshRenderer>())
+        {
+            meshRenderer.enabled = false;
+        }
+         * 
+        MeshRenderer[] meshRenderers = transform.parent.gameObject.GetComponentsInChildren<MeshRenderer>();
+        foreach (MeshRenderer meshRenderer in meshRenderers)
+        {
+            meshRenderer.enabled = false;
+        }
+        */
     }
 }

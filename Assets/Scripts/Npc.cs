@@ -39,31 +39,27 @@ public class Npc : ITarget // INHERITANCE
         var search = new SearchForTarget(this);
         var moveToTarget = new MoveToCurrentTarget(this, navMeshAgent, animator);
         var attack = new AttackCurrentTarget(this, animator);
-        var die = new DestroyNpc(this, navMeshAgent, animator);
+        //var die = new DestroyNpc(this);
         var clearTargets = new ClearTargets(this);
 
         At(search, moveToTarget, TargetOutOfMeleRange());
         At(search, attack, TargetInMeleRange());
 
-
         At(attack, search, TargetDestroyed());
         At(attack, moveToTarget, TargetOutOfMeleRange());
        
-
         At(moveToTarget, attack, TargetInMeleRange());
         At(moveToTarget, search, TargetDestroyed());
         At(moveToTarget, clearTargets, StuckTimeOut());
 
         At(clearTargets, search, TargetsClear());
 
-        _stateMachine.AddAnyTransition(die, () => isDestroyed);
+        //_stateMachine.AddAnyTransition(die, () => is_health <= 0);
 
         _stateMachine.SetState(search);
 
         void At(IState to, IState from, Func<bool> condition) => _stateMachine.AddTransition(to, from, condition);
 
-
-        //Func<bool> HasTarget() => () => Target != null && !Target.isDestroyed;
 
         Func<bool> TargetInMeleRange() => () => !isDestroyed && Target != null && !Target.isDestroyed &&
             Vector3.Distance(transform.position, Target.transform.position) <= meleAttackRange;
@@ -96,15 +92,35 @@ public class Npc : ITarget // INHERITANCE
         deathLaunchVelocity = launchVelosity;
         _health -= dmg;
         if (_health <= 0)
-            Die(); // ABSTRACTION 
+            Die();
     }
 
     public override void Die()
     {
         isDestroyed = true;
+        currentState = "destroy";
         dieclip.Play();
-        Destroy(this, 2);
-        
+        GetComponent<NavMeshAgent>().enabled = false;
+        GetComponentInChildren<Animator>().enabled = false;
+        GetComponent<CapsuleCollider>().enabled = false;
+        GetComponent<SphereCollider>().enabled = false;
+
+        var rigidbodies = this.GetComponentsInChildren<Rigidbody>();
+        foreach (var rb in rigidbodies)
+        {
+            rb.velocity = this.deathLaunchVelocity;
+        }
+
+        if (this.ownedByPlayer)
+        {
+            SpawnManager.Instance.blueSpawnCount--;
+        }
+        else
+        {
+            SpawnManager.Instance.redSpawnCount--;
+        }
+
+        Destroy(gameObject, 2f);
     }
 
     private void OnTriggerEnter(Collider other)

@@ -22,7 +22,6 @@ public class Tower : ITarget
     public override void Die()
     {
         isDestroyed = true;
-        GetComponent<MeshRenderer>().enabled = false;
-
+        gameObject.SetActive(false);
     }
 }
