@@ -31,7 +31,7 @@ internal class MoveToCurrentTarget : IState
     {
         _npc.currentState = "moveToTarget";
         TimeStuck = 0f;
-        _navMeshAgent.enabled = true;
+        //_navMeshAgent.enabled = true;
         _animator.SetBool("Walk", true);
 
         if (_npc.Target != null && !_npc.Target.isDestroyed)
@@ -44,7 +44,7 @@ internal class MoveToCurrentTarget : IState
     public void OnExit()
     {
         _npc.currentState = "Exited moveToTarget";
-        _navMeshAgent.enabled = false;
+        //_navMeshAgent.enabled = false;
         _animator.SetBool("Walk", false);
     }
 }

@@ -109,9 +109,10 @@ MonoBehaviour:
   _health: 0
   isDestroyed: 0
   ownedByPlayer: 1
-  meleAttackRange: 2.5
   currentTarget: {fileID: 0}
   lastTarget: {fileID: 0}
+  currentState: 
+  meleAttackRange: 2.5
   _attackDamage: 1
   deathLaunchVelocity: {x: 0, y: 0, z: 0}
 --- !u!135 &6565382482755588023
@@ -367,6 +368,14 @@ PrefabInstance:
       value: SkeletonWarrior
       objectReference: {fileID: 0}
     - target: {fileID: 265914353237159409, guid: 4d39bcd57cb95e940b557398ab6043e6, type: 3}
+      propertyPath: m_DynamicOccludee
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 265914353237159409, guid: 4d39bcd57cb95e940b557398ab6043e6, type: 3}
+      propertyPath: m_UpdateWhenOffscreen
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 265914353237159409, guid: 4d39bcd57cb95e940b557398ab6043e6, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 961eedb7ecb952f40aab832c0eb5b4ac, type: 2}
@@ -414,10 +423,46 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 782206747471282538, guid: 4d39bcd57cb95e940b557398ab6043e6, type: 3}
+      propertyPath: m_DynamicOccludee
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 782206747471282538, guid: 4d39bcd57cb95e940b557398ab6043e6, type: 3}
+      propertyPath: m_UpdateWhenOffscreen
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3538353296996804204, guid: 4d39bcd57cb95e940b557398ab6043e6, type: 3}
+      propertyPath: m_DynamicOccludee
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3538353296996804204, guid: 4d39bcd57cb95e940b557398ab6043e6, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 132fe94190d03124fb8ff138d80d6698, type: 2}
+    - target: {fileID: 4390560656443014619, guid: 4d39bcd57cb95e940b557398ab6043e6, type: 3}
+      propertyPath: m_DynamicOccludee
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4390560656443014619, guid: 4d39bcd57cb95e940b557398ab6043e6, type: 3}
+      propertyPath: m_UpdateWhenOffscreen
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4723782716718107186, guid: 4d39bcd57cb95e940b557398ab6043e6, type: 3}
+      propertyPath: m_DynamicOccludee
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4723782716718107186, guid: 4d39bcd57cb95e940b557398ab6043e6, type: 3}
+      propertyPath: m_UpdateWhenOffscreen
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6634294552880516493, guid: 4d39bcd57cb95e940b557398ab6043e6, type: 3}
+      propertyPath: m_DynamicOccludee
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6634294552880516493, guid: 4d39bcd57cb95e940b557398ab6043e6, type: 3}
+      propertyPath: m_UpdateWhenOffscreen
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6864232199377740450, guid: 4d39bcd57cb95e940b557398ab6043e6, type: 3}
       propertyPath: m_Enabled
       value: 1
@@ -427,12 +472,40 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 9100000, guid: ea46b45d39347a94086e57f46c32dcfa, type: 2}
     - target: {fileID: 6864232199377740450, guid: 4d39bcd57cb95e940b557398ab6043e6, type: 3}
+      propertyPath: m_CullingMode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6864232199377740450, guid: 4d39bcd57cb95e940b557398ab6043e6, type: 3}
       propertyPath: m_WarningMessage
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 6864232199377740450, guid: 4d39bcd57cb95e940b557398ab6043e6, type: 3}
       propertyPath: m_ApplyRootMotion
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7131891987383465955, guid: 4d39bcd57cb95e940b557398ab6043e6, type: 3}
+      propertyPath: m_DynamicOccludee
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7131891987383465955, guid: 4d39bcd57cb95e940b557398ab6043e6, type: 3}
+      propertyPath: m_UpdateWhenOffscreen
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7840848983053555643, guid: 4d39bcd57cb95e940b557398ab6043e6, type: 3}
+      propertyPath: m_DynamicOccludee
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7840848983053555643, guid: 4d39bcd57cb95e940b557398ab6043e6, type: 3}
+      propertyPath: m_UpdateWhenOffscreen
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9077587232213292652, guid: 4d39bcd57cb95e940b557398ab6043e6, type: 3}
+      propertyPath: m_DynamicOccludee
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9077587232213292652, guid: 4d39bcd57cb95e940b557398ab6043e6, type: 3}
+      propertyPath: m_UpdateWhenOffscreen
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4d39bcd57cb95e940b557398ab6043e6, type: 3}
@@ -765,6 +838,37 @@ CharacterJoint:
   m_EnablePreprocessing: 0
   m_MassScale: 1
   m_ConnectedMassScale: 1
+--- !u!1 &2354760626789840631 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2380460365003473104, guid: 4d39bcd57cb95e940b557398ab6043e6, type: 3}
+  m_PrefabInstance: {fileID: 118450690909517351}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1773428102 &5126834764789283282
+ParentConstraint:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2354760626789840631}
+  m_Enabled: 1
+  m_Weight: 1
+  m_TranslationAtRest: {x: 0, y: 0.91106397, z: 0.020485446}
+  m_RotationAtRest: {x: -90, y: 0, z: 0}
+  m_TranslationOffsets:
+  - {x: 0, y: 0.91106397, z: 0.020485401}
+  m_RotationOffsets:
+  - {x: -90, y: 0, z: 0}
+  m_AffectTranslationX: 1
+  m_AffectTranslationY: 1
+  m_AffectTranslationZ: 1
+  m_AffectRotationX: 1
+  m_AffectRotationY: 1
+  m_AffectRotationZ: 1
+  m_IsContraintActive: 1
+  m_IsLocked: 1
+  m_Sources:
+  - sourceTransform: {fileID: 578246647851978495}
+    weight: 1
 --- !u!1 &2503703068199318395 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2529372531154797916, guid: 4d39bcd57cb95e940b557398ab6043e6, type: 3}

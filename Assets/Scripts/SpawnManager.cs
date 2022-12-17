@@ -9,14 +9,14 @@ public class SpawnManager : MonoBehaviour
 
     private bool playerSpawn;
     private GameObject[] _spawnPoints;
-    [SerializeField] float spawnDelay = 3f;
+    [SerializeField] float spawnDelay = 2f;
    
     [SerializeField] GameObject[] _playerSpawnPoints;
     [SerializeField] GameObject[] _enemySpawnPoints;
 
     public int redSpawnCount = 0;
     public int blueSpawnCount = 0;
-    public int spawnCountMax = 30;
+    public int spawnCountMax = 50;
 
     public static SpawnManager Instance;
 

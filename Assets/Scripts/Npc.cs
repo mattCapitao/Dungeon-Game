@@ -39,7 +39,7 @@ public class Npc : ITarget // INHERITANCE
         var search = new SearchForTarget(this);
         var moveToTarget = new MoveToCurrentTarget(this, navMeshAgent, animator);
         var attack = new AttackCurrentTarget(this, animator);
-        //var die = new DestroyNpc(this);
+
         var clearTargets = new ClearTargets(this);
 
         At(search, moveToTarget, TargetOutOfMeleRange());
@@ -53,8 +53,6 @@ public class Npc : ITarget // INHERITANCE
         At(moveToTarget, clearTargets, StuckTimeOut());
 
         At(clearTargets, search, TargetsClear());
-
-        //_stateMachine.AddAnyTransition(die, () => is_health <= 0);
 
         _stateMachine.SetState(search);
 
