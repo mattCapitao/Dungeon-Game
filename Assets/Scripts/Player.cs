@@ -68,6 +68,7 @@ public class Player : MonoBehaviour
 
     private void AttackTarget()
     {
+       
         _navMeshAgent.enabled = false;
         _nextAttackTime = Time.time + _attackDelay;
         _animator.SetTrigger("Attack");
@@ -90,6 +91,17 @@ public class Player : MonoBehaviour
         }
         
     }
+
+    private void lookAtTarget(Vector3 location)
+    {
+        if (location == null) return;
+        var currentRotation = transform.rotation.eulerAngles.y;
+        var targetRotation = Quaternion.LookRotation(location - transform.position).eulerAngles.y;
+        float diff = Math.Abs(currentRotation - targetRotation);
+        if(diff > 10f)
+            transform.LookAt(_target.transform);
+
+    }
     
 
     private void MoveToTarget()
@@ -105,7 +117,7 @@ public class Player : MonoBehaviour
     {
         if (location == null) return;
         var targetRotation = Quaternion.LookRotation(location - transform.position);
-        transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.Euler(new Vector3(0f, targetRotation.eulerAngles.y, 0f)), 10 * Time.deltaTime);
+        transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.Euler(new Vector3(0f, targetRotation.eulerAngles.y, 0f)), 30 * Time.deltaTime);
     }
 
 

@@ -112,5 +112,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ownedByPlayer: 0
   prefabs:
-  - {fileID: 6103800174904062667, guid: 5ba3d32e888e74a4ab2f68026a5fe28d, type: 3}
+  - {fileID: 1343255178108493740, guid: 5ba3d32e888e74a4ab2f68026a5fe28d, type: 3}
   - {fileID: 118450692128683171, guid: 6c9bbd7480395ca4bb6a2ec60c5bd690, type: 3}

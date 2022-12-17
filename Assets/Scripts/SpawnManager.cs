@@ -9,7 +9,7 @@ public class SpawnManager : MonoBehaviour
 
     private bool playerSpawn;
     private GameObject[] _spawnPoints;
-    [SerializeField] float spawnDelay = 2f;
+    [SerializeField] float spawnDelay = 1f;
    
     [SerializeField] GameObject[] _playerSpawnPoints;
     [SerializeField] GameObject[] _enemySpawnPoints;
@@ -51,11 +51,15 @@ public class SpawnManager : MonoBehaviour
         {
            _spawnPoints = _playerSpawnPoints;
         }
-        _nextSpawnTime = Time.time + spawnDelay;
+        
 
         GameObject _spawnPoint = _spawnPoints[Random.Range(0, _spawnPoints.Length)];
 
         SpawnPoint spawnPointController = _spawnPoint.GetComponent<SpawnPoint>();
+
+        Tower tower = spawnPointController.structure.GetComponent<Tower>();
+        if(tower)
+            if (spawnPointController.structure.GetComponent<Tower>().isDestroyed)return;
 
         
         if (spawnPointController.ownedByPlayer)
@@ -68,6 +72,8 @@ public class SpawnManager : MonoBehaviour
             _prefab = spawnPointController.prefabs[0];
             redSpawnCount++;
         }
+
+        _nextSpawnTime = Time.time + spawnDelay;
 
         var _npc = Instantiate(_prefab, _spawnPoint.transform.position, _spawnPoint.transform.rotation);
 

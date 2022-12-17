@@ -6,4 +6,5 @@ public class SpawnPoint : MonoBehaviour
 {
     public bool ownedByPlayer;
     public GameObject[] prefabs;
+    public GameObject structure;
 }
